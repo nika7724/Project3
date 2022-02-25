@@ -1,0 +1,64 @@
+#1
+SELECT *
+FROM tmember
+WHERE cName LIKE 'Jens S.'
+    AND dBirth <= ('1969-12-31')
+   OR YEAR(dNewMember) = 2013
+;
+
+#2
+SELECT *
+FROM tbook
+WHERE nPublishingCompanyID IN (15, 32)
+  AND nPublishingYear < 2000
+;
+
+#3
+SELECT cName, cSurname
+FROM tmember
+WHERE cPhoneNo IS NOT NULL /* LIKE '%'(either is fine) */
+  AND cAddress IS NULL
+;
+
+#4
+SELECT cSurname
+FROM tauthor
+WHERE cSurname = 'Byatt'
+  AND cName LIKE 'A%S%'
+;
+
+#5
+SELECT nBookID
+FROM tbook
+WHERE nPublishingYear = 2007
+  AND nPublishingCompanyID = 32
+;
+
+#6
+SELECT nBookID
+FROM tbookcopy tb
+         JOIN tloan t on tb.cSignature = t.cSignature
+WHERE cCPR = '0305393207'
+  AND dLoan BETWEEN '2014-01-01' AND '2014-12-31'
+;
+
+#7
+SELECT tmember.*
+FROM tmember
+         JOIN tloan t2 on tmember.cCPR = t2.cCPR
+WHERE t2.cCPR > 0
+  AND dLoan BETWEEN '2014-01-01' AND '2014-12-31'
+;
+
+#8
+SELECT *
+FROM tmember
+ORDER BY dNewMember, cSurname, cName
+;
+
+#9
+SELECT cTitle, cName
+FROM tbooktheme JOIN tbook t on tbooktheme.nBookID = t.nBookID
+JOIN ttheme t2 on tbooktheme.nThemeID = t2.nThemeID
+WHERE nPublishingCompanyID = 32
+;
